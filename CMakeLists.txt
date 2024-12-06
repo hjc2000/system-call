@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 include($ENV{cpp_lib_build_scripts_path}/cmake-module/setup.cmake)
 include(target_import_bsp_interface)
 
-set(ProjectName system_call)
+set(ProjectName system-call)
 project(${ProjectName})
 enable_language(ASM)
 set(CMAKE_CXX_STANDARD 20)
