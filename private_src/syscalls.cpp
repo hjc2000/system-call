@@ -74,7 +74,7 @@ extern "C"
     {
         try
         {
-            DI_Console().Write(ptr, len);
+            bsp::di::Console().Write(ptr, len);
             return len;
         }
         catch (...)
