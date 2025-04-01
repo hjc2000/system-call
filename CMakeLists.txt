@@ -16,7 +16,6 @@ endif()
 include(target_import_bsp_interface)
 
 
-
 add_library(${ProjectName} STATIC)
 target_import_src(${ProjectName})
 target_import_bsp_interface(${ProjectName} PUBLIC)
