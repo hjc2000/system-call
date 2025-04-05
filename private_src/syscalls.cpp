@@ -26,145 +26,123 @@ extern "C"
 {
 
 #include <errno.h>
-#include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/times.h>
-#include <time.h>
 #include <unistd.h>
 
-    int _getpid(void)
-    {
-        return 1;
-    }
+	int _getpid(void)
+	{
+		return 1;
+	}
 
-    int _kill(int pid, int sig)
-    {
-        (void)pid;
-        (void)sig;
-        errno = EINVAL;
-        return -1;
-    }
+	int _kill(int pid, int sig)
+	{
+		errno = EINVAL;
+		return -1;
+	}
 
-    void _exit(int status)
-    {
-        _kill(status, -1);
-        while (1)
-        {
-            /* Make sure we hang here */
-        }
-    }
+	void _exit(int status)
+	{
+		_kill(status, -1);
+		while (1)
+		{
+			/* Make sure we hang here */
+		}
+	}
 
-    int _read(int file, char *ptr, int len)
-    {
-        return EIO;
-    }
+	int _read(int file, char *ptr, int len)
+	{
+		return EIO;
+	}
 
-    /// @brief stdio 底层会调用本函数。
-    ///
-    /// @param file 文件描述符
-    /// @note 对于标准输出，file = 1，对于错误输出，file = 2。
-    ///
-    /// @param ptr
-    /// @param len
-    /// @return
-    int _write(int file, char *ptr, int len)
-    {
-        try
-        {
-            bsp::di::Console().Write(ptr, len);
-            return len;
-        }
-        catch (...)
-        {
-            return EIO;
-        }
-    }
+	/// @brief stdio 底层会调用本函数。
+	///
+	/// @param file 文件描述符
+	/// @note 对于标准输出，file = 1，对于错误输出，file = 2。
+	///
+	/// @param ptr
+	/// @param len
+	/// @return
+	int _write(int file, char *ptr, int len)
+	{
+		try
+		{
+			bsp::di::Console().Write(ptr, len);
+			return len;
+		}
+		catch (...)
+		{
+			return EIO;
+		}
+	}
 
-    int _close(int file)
-    {
-        (void)file;
-        return -1;
-    }
+	int _close(int file)
+	{
+		return -1;
+	}
 
-    int _fstat(int file, struct stat *st)
-    {
-        (void)file;
-        st->st_mode = S_IFCHR;
-        return 0;
-    }
+	int _fstat(int file, struct stat *st)
+	{
+		st->st_mode = S_IFCHR;
+		return 0;
+	}
 
-    int _isatty(int file)
-    {
-        (void)file;
-        return 0;
-    }
+	int _isatty(int file)
+	{
+		return 0;
+	}
 
-    int _lseek(int file, int ptr, int dir)
-    {
-        (void)file;
-        (void)ptr;
-        (void)dir;
-        return 0;
-    }
+	int _lseek(int file, int ptr, int dir)
+	{
+		return 0;
+	}
 
-    int _open(char *path, int flags, ...)
-    {
-        (void)path;
-        (void)flags;
-        /* Pretend like we always fail */
-        return -1;
-    }
+	int _open(char *path, int flags, ...)
+	{
+		/* Pretend like we always fail */
+		return -1;
+	}
 
-    int _wait(int *status)
-    {
-        (void)status;
-        errno = ECHILD;
-        return -1;
-    }
+	int _wait(int *status)
+	{
+		errno = ECHILD;
+		return -1;
+	}
 
-    int _unlink(char *name)
-    {
-        (void)name;
-        errno = ENOENT;
-        return -1;
-    }
+	int _unlink(char *name)
+	{
+		errno = ENOENT;
+		return -1;
+	}
 
-    int _times(struct tms *buf)
-    {
-        (void)buf;
-        return -1;
-    }
+	int _times(struct tms *buf)
+	{
+		return -1;
+	}
 
-    int _stat(char *file, struct stat *st)
-    {
-        (void)file;
-        st->st_mode = S_IFCHR;
-        return 0;
-    }
+	int _stat(char *file, struct stat *st)
+	{
+		st->st_mode = S_IFCHR;
+		return 0;
+	}
 
-    int _link(char *old, char *new_value)
-    {
-        (void)old;
-        (void)new_value;
-        errno = EMLINK;
-        return -1;
-    }
+	int _link(char *old, char *new_value)
+	{
+		errno = EMLINK;
+		return -1;
+	}
 
-    int _fork(void)
-    {
-        errno = EAGAIN;
-        return -1;
-    }
+	int _fork(void)
+	{
+		errno = EAGAIN;
+		return -1;
+	}
 
-    int _execve(char *name, char **argv, char **env)
-    {
-        (void)name;
-        (void)argv;
-        (void)env;
-        errno = ENOMEM;
-        return -1;
-    }
+	int _execve(char *name, char **argv, char **env)
+	{
+		errno = ENOMEM;
+		return -1;
+	}
 }
