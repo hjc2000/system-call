@@ -150,4 +150,15 @@ extern "C"
 	{
 		return nullptr;
 	}
+
+	int fputc(int ch, FILE *f)
+	{
+		return ch;
+	}
+
+	int fputs(char const *str, FILE *f)
+	{
+		// 成功返回0，可以根据实际需求调整
+		return 0;
+	}
 }
