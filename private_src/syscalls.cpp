@@ -145,4 +145,9 @@ extern "C"
 		errno = ENOMEM;
 		return -1;
 	}
+
+	char *getenv(char const *name)
+	{
+		return nullptr;
+	}
 }
