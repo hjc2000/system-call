@@ -20,7 +20,7 @@
  ******************************************************************************
  */
 
-#include <bsp-interface/di/console.h>
+#include "bsp-interface/di/console.h"
 
 extern "C"
 {
